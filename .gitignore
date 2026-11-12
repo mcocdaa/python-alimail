@@ -1,0 +1,35 @@
+# byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.cover
+.tmp/
+_m700/
+
+# build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# env
+.venv/
+venv/
+env/
+
+# local secrets — 绝不提交
+alimail_creds.json
+*.local.json
+.env
+.env.*
+
+# editors / os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,2718 @@
+[
+  {
+    "name": "add_department",
+    "method": "POST",
+    "path": "/v2/departments",
+    "summary": "创建部门",
+    "tags": [
+      "部门"
+    ],
+    "scopes": [
+      "Department.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DepartmentService_AddDepartment",
+    "params": []
+  },
+  {
+    "name": "get_departments",
+    "method": "POST",
+    "path": "/v2/departments/listByIds",
+    "summary": "批量获取部门信息",
+    "tags": [
+      "部门"
+    ],
+    "scopes": [
+      "Department.Read.All",
+      "Department.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DepartmentService_GetDepartments",
+    "params": [
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "get_departments_chains",
+    "method": "POST",
+    "path": "/v2/departments/listChainsByIds",
+    "summary": "批量获取部门层级链",
+    "tags": [
+      "部门"
+    ],
+    "scopes": [
+      "Department.Read.All",
+      "Department.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DepartmentService_GetDepartmentsChains",
+    "params": []
+  },
+  {
+    "name": "delete_department",
+    "method": "DELETE",
+    "path": "/v2/departments/{id}",
+    "summary": "删除部门",
+    "tags": [
+      "部门"
+    ],
+    "scopes": [
+      "Department.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DepartmentService_DeleteDepartment",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_department",
+    "method": "GET",
+    "path": "/v2/departments/{id}",
+    "summary": "获取部门信息",
+    "tags": [
+      "部门"
+    ],
+    "scopes": [
+      "Department.Read.All",
+      "Department.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DepartmentService_GetDepartment",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "update_department",
+    "method": "PATCH",
+    "path": "/v2/departments/{id}",
+    "summary": "更新部门信息",
+    "tags": [
+      "部门"
+    ],
+    "scopes": [
+      "Department.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DepartmentService_UpdateDepartment",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_department_chain",
+    "method": "GET",
+    "path": "/v2/departments/{id}/chain",
+    "summary": "获取部门层级链",
+    "tags": [
+      "部门"
+    ],
+    "scopes": [
+      "Department.Read.All",
+      "Department.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DepartmentService_GetDepartmentChain",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_sub_departments",
+    "method": "GET",
+    "path": "/v2/departments/{id}/departments",
+    "summary": "查询子部门列表",
+    "tags": [
+      "部门"
+    ],
+    "scopes": [
+      "Department.Read.All",
+      "Department.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DepartmentService_ListSubDepartments",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "offset",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": true
+      },
+      {
+        "name": "managed",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "list_users_of_department",
+    "method": "GET",
+    "path": "/v2/departments/{id}/users",
+    "summary": "查询部门成员",
+    "tags": [
+      "部门"
+    ],
+    "scopes": [
+      "Department.Read.All",
+      "Department.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DepartmentService_ListUsersOfDepartment",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "offset",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": true
+      },
+      {
+        "name": "managed",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "list_domains",
+    "method": "GET",
+    "path": "/v2/domains",
+    "summary": "查询组织域名列表",
+    "tags": [
+      "域名"
+    ],
+    "scopes": [
+      "Domain.Read.All",
+      "Domain.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainService_ListDomains",
+    "params": [
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "add_domain",
+    "method": "POST",
+    "path": "/v2/domains",
+    "summary": "创建域名",
+    "tags": [
+      "域名"
+    ],
+    "scopes": [
+      "Domain.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainService_AddDomain",
+    "params": []
+  },
+  {
+    "name": "delete_domain",
+    "method": "DELETE",
+    "path": "/v2/domains/{domain}",
+    "summary": "删除域名",
+    "tags": [
+      "域名"
+    ],
+    "scopes": [
+      "Domain.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainService_DeleteDomain",
+    "params": [
+      {
+        "name": "domain",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "verify_domain",
+    "method": "POST",
+    "path": "/v2/domains/{domain}/verify",
+    "summary": "验证域名所有权",
+    "tags": [
+      "域名"
+    ],
+    "scopes": [
+      "Domain.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainService_VerifyDomain",
+    "params": [
+      {
+        "name": "domain",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_domain",
+    "method": "GET",
+    "path": "/v2/domains/{id_or_domain}",
+    "summary": "获取域名信息",
+    "tags": [
+      "域名"
+    ],
+    "scopes": [
+      "Domain.Read.All",
+      "Domain.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainService_GetDomain",
+    "params": [
+      {
+        "name": "id_or_domain",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_groups",
+    "method": "GET",
+    "path": "/v2/groups",
+    "summary": "查询邮件组列表",
+    "tags": [
+      "邮件组"
+    ],
+    "scopes": [
+      "Group.Read.All",
+      "Group.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_GroupService_ListGroups",
+    "params": [
+      {
+        "name": "filter",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "cursor",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "size",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "types",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "orderby",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "order",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "add_group",
+    "method": "POST",
+    "path": "/v2/groups",
+    "summary": "创建邮件组",
+    "tags": [
+      "邮件组"
+    ],
+    "scopes": [
+      "Group.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_GroupService_AddGroup",
+    "params": []
+  },
+  {
+    "name": "delete_group",
+    "method": "DELETE",
+    "path": "/v2/groups/{id_or_email}",
+    "summary": "删除邮件组",
+    "tags": [
+      "邮件组"
+    ],
+    "scopes": [
+      "Group.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_GroupService_DeleteGroup",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_group",
+    "method": "GET",
+    "path": "/v2/groups/{id_or_email}",
+    "summary": "获取邮件组信息",
+    "tags": [
+      "邮件组"
+    ],
+    "scopes": [
+      "Group.Read.All",
+      "Group.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_GroupService_GetGroup",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "update_group",
+    "method": "PATCH",
+    "path": "/v2/groups/{id_or_email}",
+    "summary": "更新邮件组信息",
+    "tags": [
+      "邮件组"
+    ],
+    "scopes": [
+      "Group.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_GroupService_UpdateGroup",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_group_members",
+    "method": "GET",
+    "path": "/v2/groups/{id_or_email}/members",
+    "summary": "查询邮件组成员",
+    "tags": [
+      "邮件组"
+    ],
+    "scopes": [
+      "Group.Read.All",
+      "Group.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_GroupService_ListGroupMembers",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "offset",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "add_members",
+    "method": "POST",
+    "path": "/v2/groups/{id_or_email}/members/batchAdd",
+    "summary": "批量添加邮件组成员",
+    "tags": [
+      "邮件组"
+    ],
+    "scopes": [
+      "Group.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_GroupService_AddMembers",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "delete_members",
+    "method": "POST",
+    "path": "/v2/groups/{id_or_email}/members/batchDelete",
+    "summary": "批量删除邮件组成员",
+    "tags": [
+      "邮件组"
+    ],
+    "scopes": [
+      "Group.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_GroupService_DeleteMembers",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_policies",
+    "method": "GET",
+    "path": "/v2/identity/conditionalAccess/policies",
+    "summary": "查询条件访问策略列表。",
+    "tags": [
+      "条件访问"
+    ],
+    "scopes": [
+      "ConditionalAccessPolicy.Read.All",
+      "ConditionalAccessPolicy.ReadWrite.All"
+    ],
+    "operation_id": "com_alibaba_alimail_iam_access_ConditionalAccessPolicyService_listPolicies",
+    "params": []
+  },
+  {
+    "name": "create_policy",
+    "method": "POST",
+    "path": "/v2/identity/conditionalAccess/policies",
+    "summary": "创建条件访问策略。",
+    "tags": [
+      "条件访问"
+    ],
+    "scopes": [
+      "ConditionalAccessPolicy.ReadWrite.All"
+    ],
+    "operation_id": "com_alibaba_alimail_iam_access_ConditionalAccessPolicyService_createPolicy",
+    "params": []
+  },
+  {
+    "name": "delete_policy",
+    "method": "DELETE",
+    "path": "/v2/identity/conditionalAccess/policies/{id}",
+    "summary": "删除条件访问策略。",
+    "tags": [
+      "条件访问"
+    ],
+    "scopes": [
+      "ConditionalAccessPolicy.ReadWrite.All"
+    ],
+    "operation_id": "com_alibaba_alimail_iam_access_ConditionalAccessPolicyService_deletePolicy",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "update_policy",
+    "method": "POST",
+    "path": "/v2/identity/conditionalAccess/policies/{id}",
+    "summary": "更新条件访问策略。",
+    "tags": [
+      "条件访问"
+    ],
+    "scopes": [
+      "ConditionalAccessPolicy.ReadWrite.All"
+    ],
+    "operation_id": "com_alibaba_alimail_iam_access_ConditionalAccessPolicyService_updatePolicy",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_domain_allow_block_lists",
+    "method": "GET",
+    "path": "/v2/messageRules/allowBlockLists",
+    "summary": "查询域级收信黑白名单",
+    "tags": [
+      "规则-收信黑白名单"
+    ],
+    "scopes": [
+      "MessageRule.Read.All",
+      "MessageRule.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_message_filter_MessageFilterService_GetDomainAllowBlockLists",
+    "params": [
+      {
+        "name": "type",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "keyword",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "create_domain_allow_block_lists",
+    "method": "POST",
+    "path": "/v2/messageRules/allowBlockLists",
+    "summary": "创建域级收信黑白名单条目",
+    "tags": [
+      "规则-收信黑白名单"
+    ],
+    "scopes": [
+      "MessageRule.Write.All",
+      "MessageRule.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_message_filter_MessageFilterService_CreateDomainAllowBlockLists",
+    "params": []
+  },
+  {
+    "name": "delete_domain_allow_block_lists",
+    "method": "POST",
+    "path": "/v2/messageRules/allowBlockLists/batchDelete",
+    "summary": "批量删除域级收信黑白名单条目",
+    "tags": [
+      "规则-收信黑白名单"
+    ],
+    "scopes": [
+      "MessageRule.Write.All",
+      "MessageRule.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_message_filter_MessageFilterService_DeleteDomainAllowBlockLists",
+    "params": []
+  },
+  {
+    "name": "get_organization",
+    "method": "GET",
+    "path": "/v2/organization/$current",
+    "summary": "获取组织信息",
+    "tags": [
+      "组织"
+    ],
+    "scopes": [
+      "Organization.Read.All",
+      "Organization.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_OrganizationService_GetOrganization",
+    "params": []
+  },
+  {
+    "name": "update_organization",
+    "method": "PATCH",
+    "path": "/v2/organization/$current",
+    "summary": "更新组织信息",
+    "tags": [
+      "组织"
+    ],
+    "scopes": [
+      "Organization.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_OrganizationService_UpdateOrganization",
+    "params": []
+  },
+  {
+    "name": "get_records",
+    "method": "POST",
+    "path": "/v2/reports",
+    "summary": "查询审计日志",
+    "tags": [
+      "审计日志"
+    ],
+    "scopes": [
+      "Report.Read.All"
+    ],
+    "operation_id": "alimailpb_alimail_mms_ReportService_GetRecords",
+    "params": []
+  },
+  {
+    "name": "add_contact_folder",
+    "method": "POST",
+    "path": "/v2/sharedContactFolders",
+    "summary": "创建公共联系人分组",
+    "tags": [
+      "公共联系人-分组"
+    ],
+    "scopes": [
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactFolderService_AddContactFolder",
+    "params": []
+  },
+  {
+    "name": "delete_contact_folder",
+    "method": "DELETE",
+    "path": "/v2/sharedContactFolders/{id}",
+    "summary": "删除公共联系人分组",
+    "tags": [
+      "公共联系人-分组"
+    ],
+    "scopes": [
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactFolderService_DeleteContactFolder",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_contact_folder",
+    "method": "GET",
+    "path": "/v2/sharedContactFolders/{id}",
+    "summary": "获取公共联系人分组信息",
+    "tags": [
+      "公共联系人-分组"
+    ],
+    "scopes": [
+      "SharedContact.Read.All",
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactFolderService_GetContactFolder",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "update_contact_folder",
+    "method": "PATCH",
+    "path": "/v2/sharedContactFolders/{id}",
+    "summary": "更新公共联系人分组",
+    "tags": [
+      "公共联系人-分组"
+    ],
+    "scopes": [
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactFolderService_UpdateContactFolder",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_contact_folder_chain",
+    "method": "GET",
+    "path": "/v2/sharedContactFolders/{id}/chain",
+    "summary": "获取公共联系人分组层级链",
+    "tags": [
+      "公共联系人-分组"
+    ],
+    "scopes": [
+      "SharedContact.Read.All",
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactFolderService_GetContactFolderChain",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_child_folder",
+    "method": "GET",
+    "path": "/v2/sharedContactFolders/{id}/childFolders",
+    "summary": "查询公共联系人子分组",
+    "tags": [
+      "公共联系人-分组"
+    ],
+    "scopes": [
+      "SharedContact.Read.All",
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactFolderService_ListChildFolder",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "offset",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "managed",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "list_contact_of_folder",
+    "method": "GET",
+    "path": "/v2/sharedContactFolders/{id}/contacts",
+    "summary": "查询分组内的公共联系人",
+    "tags": [
+      "公共联系人-分组"
+    ],
+    "scopes": [
+      "SharedContact.Read.All",
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactFolderService_ListContactOfFolder",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "offset",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "managed",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "add_contact",
+    "method": "POST",
+    "path": "/v2/sharedContacts",
+    "summary": "创建公共联系人",
+    "tags": [
+      "公共联系人-联系人"
+    ],
+    "scopes": [
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactService_AddContact",
+    "params": []
+  },
+  {
+    "name": "delete_contacts",
+    "method": "POST",
+    "path": "/v2/sharedContacts/batchDelete",
+    "summary": "批量删除公共联系人",
+    "tags": [
+      "公共联系人-联系人"
+    ],
+    "scopes": [
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactService_DeleteContacts",
+    "params": []
+  },
+  {
+    "name": "delete_contact",
+    "method": "DELETE",
+    "path": "/v2/sharedContacts/{id}",
+    "summary": "删除公共联系人",
+    "tags": [
+      "公共联系人-联系人"
+    ],
+    "scopes": [
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactService_DeleteContact",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_contact",
+    "method": "GET",
+    "path": "/v2/sharedContacts/{id}",
+    "summary": "获取公共联系人信息",
+    "tags": [
+      "公共联系人-联系人"
+    ],
+    "scopes": [
+      "SharedContact.Read.All",
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactService_GetContact",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "update_contact",
+    "method": "PATCH",
+    "path": "/v2/sharedContacts/{id}",
+    "summary": "更新公共联系人信息",
+    "tags": [
+      "公共联系人-联系人"
+    ],
+    "scopes": [
+      "SharedContact.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_DomainContactService_UpdateContact",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "do_upload",
+    "method": "POST",
+    "path": "/v2/stream/{id}",
+    "summary": "上传文件分片",
+    "tags": [
+      "文件流"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_stream_StreamService_DoUpload",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_users",
+    "method": "GET",
+    "path": "/v2/users",
+    "summary": "查询用户列表",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Read.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_ListUsers",
+    "params": [
+      {
+        "name": "filter",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "cursor",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "size",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "orderby",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "order",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "managed",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "add_user",
+    "method": "POST",
+    "path": "/v2/users",
+    "summary": "创建用户",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_AddUser",
+    "params": []
+  },
+  {
+    "name": "get_users",
+    "method": "POST",
+    "path": "/v2/users/listByIds",
+    "summary": "批量获取用户信息",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Read.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_GetUsers",
+    "params": [
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "list_calendars",
+    "method": "GET",
+    "path": "/v2/users/{email}/calendars",
+    "summary": "查询日历列表",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [
+      "Calendar.Read.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_CalendarService_ListCalendars",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "create_calendar",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars",
+    "summary": "创建日历",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [
+      "Calendar.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_CalendarService_CreateCalendar",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_schedule",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars/getSchedule",
+    "summary": "查询用户忙闲状态",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [
+      "Calendar.Read.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_EventService_GetSchedule",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "accept_calendar_share",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars/shares/accept",
+    "summary": "接受日历共享",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [],
+    "operation_id": "alimailpb_alimail_mailagent_open_CalendarService_AcceptCalendarShare",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "export_events",
+    "method": "GET",
+    "path": "/v2/users/{email}/calendars/{calendarId}/$value",
+    "summary": "导出日程为 ICS 文件",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [
+      "Calendar.Read.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_EventService_ExportEvents",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "calendarId",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "startTime",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "endTime",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "import_events",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars/{calendarId}/$value",
+    "summary": "从 ICS 文件导入日程",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [
+      "Calendar.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_EventService_ImportEvents",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "calendarId",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "create_event",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars/{calendarId}/events",
+    "summary": "创建日程",
+    "tags": [
+      "日历-日历"
+    ],
+    "scopes": [
+      "Calendar.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_EventService_CreateEvent",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "calendarId",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "delete_event",
+    "method": "DELETE",
+    "path": "/v2/users/{email}/calendars/{calendarId}/events/{eventId}",
+    "summary": "删除日程",
+    "tags": [
+      "日历-日历"
+    ],
+    "scopes": [
+      "Calendar.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_EventService_DeleteEvent",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "calendarId",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "eventId",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_event",
+    "method": "GET",
+    "path": "/v2/users/{email}/calendars/{calendarId}/events/{eventId}",
+    "summary": "获取日程详情",
+    "tags": [
+      "日历-日历"
+    ],
+    "scopes": [
+      "Calendar.Read.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_EventService_GetEvent",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "calendarId",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "eventId",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "update_event",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars/{calendarId}/events/{eventId}",
+    "summary": "更新日程",
+    "tags": [
+      "日历-日历"
+    ],
+    "scopes": [
+      "Calendar.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_EventService_UpdateEvent",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "calendarId",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "eventId",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "cancel_event",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars/{calendarId}/events/{eventId}/cancel",
+    "summary": "取消会议日程",
+    "tags": [
+      "日历-日历"
+    ],
+    "scopes": [
+      "Calendar.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_EventService_CancelEvent",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "calendarId",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "eventId",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "reply_event",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars/{calendarId}/events/{eventId}/reply",
+    "summary": "响应会议邀请",
+    "tags": [
+      "日历-日历"
+    ],
+    "scopes": [
+      "Calendar.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_EventService_ReplyEvent",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "calendarId",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "eventId",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "event_view",
+    "method": "GET",
+    "path": "/v2/users/{email}/calendars/{calendarId}/eventsview",
+    "summary": "查询时间范围内的日程",
+    "tags": [
+      "日历-日历"
+    ],
+    "scopes": [
+      "Calendar.Read.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_EventService_EventView",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "calendarId",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "startTime",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "endTime",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "cursor",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "delete_calendar",
+    "method": "DELETE",
+    "path": "/v2/users/{email}/calendars/{id}",
+    "summary": "删除日历",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [
+      "Calendar.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_CalendarService_DeleteCalendar",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_calendar",
+    "method": "GET",
+    "path": "/v2/users/{email}/calendars/{id}",
+    "summary": "获取日历信息",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [
+      "Calendar.Read.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_CalendarService_GetCalendar",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "update_calendar",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars/{id}",
+    "summary": "更新日历信息",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [
+      "Calendar.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_CalendarService_UpdateCalendar",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_calendar_shares",
+    "method": "GET",
+    "path": "/v2/users/{email}/calendars/{id}/shares",
+    "summary": "查询日历共享关系",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [],
+    "operation_id": "alimailpb_alimail_mailagent_open_CalendarService_ListCalendarShares",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "share_calendar",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars/{id}/shares/",
+    "summary": "共享日历",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [],
+    "operation_id": "alimailpb_alimail_mailagent_open_CalendarService_ShareCalendar",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "unshare_calendar",
+    "method": "POST",
+    "path": "/v2/users/{email}/calendars/{id}/shares/batchRemove",
+    "summary": "批量取消日历共享",
+    "tags": [
+      "日历-日历文件夹"
+    ],
+    "scopes": [],
+    "operation_id": "alimailpb_alimail_mailagent_open_CalendarService_UnshareCalendar",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_mail_folders",
+    "method": "GET",
+    "path": "/v2/users/{email}/mailFolders",
+    "summary": "查询邮件文件夹列表",
+    "tags": [
+      "邮件-邮件文件夹"
+    ],
+    "scopes": [
+      "Mail.Read.All",
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailFolderService_ListMailFolders",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "folderId",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "recursive",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "create_mail_folder",
+    "method": "POST",
+    "path": "/v2/users/{email}/mailFolders",
+    "summary": "创建邮件文件夹",
+    "tags": [
+      "邮件-邮件文件夹"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailFolderService_CreateMailFolder",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_messages",
+    "method": "GET",
+    "path": "/v2/users/{email}/mailFolders/{folderId}/messages",
+    "summary": "查询文件夹内的邮件列表",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.Read.All",
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_ListMessages",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "folderId",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "cursor",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "size",
+        "in": "query",
+        "required": true
+      },
+      {
+        "name": "isAscending",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "startTime",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "endTime",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "delete_mail_folder",
+    "method": "DELETE",
+    "path": "/v2/users/{email}/mailFolders/{id}",
+    "summary": "删除邮件文件夹",
+    "tags": [
+      "邮件-邮件文件夹"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailFolderService_DeleteMailFolder",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "update_mail_folder",
+    "method": "PATCH",
+    "path": "/v2/users/{email}/mailFolders/{id}",
+    "summary": "更新邮件文件夹名称",
+    "tags": [
+      "邮件-邮件文件夹"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailFolderService_UpdateMailFolder",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "move_mail_folder",
+    "method": "POST",
+    "path": "/v2/users/{email}/mailFolders/{id}/move",
+    "summary": "移动邮件文件夹",
+    "tags": [
+      "邮件-邮件文件夹"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailFolderService_MoveMailFolder",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "sort_mail_folders",
+    "method": "POST",
+    "path": "/v2/users/{email}/mailFolders/{id}/sort",
+    "summary": "文件夹排序",
+    "tags": [
+      "邮件-邮件文件夹"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailFolderService_SortMailFolders",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "create_message",
+    "method": "POST",
+    "path": "/v2/users/{email}/messages",
+    "summary": "创建邮件草稿",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_CreateMessage",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "delete_messages",
+    "method": "POST",
+    "path": "/v2/users/{email}/messages/batchDelete",
+    "summary": "批量删除邮件",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_DeleteMessages",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "batch_update_messages",
+    "method": "POST",
+    "path": "/v2/users/{email}/messages/batchUpdate",
+    "summary": "批量更新邮件",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_BatchUpdateMessages",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "save_mime_bytes",
+    "method": "POST",
+    "path": "/v2/users/{email}/messages/mimeRaw",
+    "summary": "导入 EML 邮件",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_SaveMimeBytes",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "move_messages",
+    "method": "POST",
+    "path": "/v2/users/{email}/messages/move",
+    "summary": "批量移动邮件",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_MoveMessages",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "search_message",
+    "method": "POST",
+    "path": "/v2/users/{email}/messages/query",
+    "summary": "搜索邮件",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.Read.All",
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_message_MailSearchService_SearchMessage",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "get_message",
+    "method": "GET",
+    "path": "/v2/users/{email}/messages/{id}",
+    "summary": "获取邮件详情",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.Read.All",
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_GetMessage",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "update_message",
+    "method": "POST",
+    "path": "/v2/users/{email}/messages/{id}",
+    "summary": "更新邮件草稿",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_UpdateMessage",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "list_attachments",
+    "method": "GET",
+    "path": "/v2/users/{email}/messages/{id}/attachments",
+    "summary": "查询邮件附件列表",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.Read.All",
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_ListAttachments",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "create_attachment_upload_session",
+    "method": "POST",
+    "path": "/v2/users/{email}/messages/{id}/attachments/createUploadSession",
+    "summary": "创建邮件附件上传会话",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_CreateAttachmentUploadSession",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "delete_attachment",
+    "method": "DELETE",
+    "path": "/v2/users/{email}/messages/{id}/attachments/{attachmentId}",
+    "summary": "删除草稿邮件附件",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_DeleteAttachment",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "attachmentId",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "create_attachment_download_session",
+    "method": "GET",
+    "path": "/v2/users/{email}/messages/{id}/attachments/{attachmentId}/$value",
+    "summary": "获取邮件附件下载地址",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.Read.All",
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_CreateAttachmentDownloadSession",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "attachmentId",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "copy_message",
+    "method": "POST",
+    "path": "/v2/users/{email}/messages/{id}/copy",
+    "summary": "复制邮件到其他邮箱",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_CopyMessage",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "send_message",
+    "method": "POST",
+    "path": "/v2/users/{email}/messages/{id}/send",
+    "summary": "发送邮件草稿",
+    "tags": [
+      "邮件-邮件"
+    ],
+    "scopes": [
+      "Mail.Send.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_MailService_SendMessage",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_login_link",
+    "method": "POST",
+    "path": "/v2/users/{email}/passwordless/link",
+    "summary": "生成用户免登录链接",
+    "tags": [
+      "登录&登出"
+    ],
+    "scopes": [
+      "User.Login.All"
+    ],
+    "operation_id": "com_alibaba_alimail_sso_unify_PasswordlessService_getLoginLink",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "delete_messages_2",
+    "method": "POST",
+    "path": "/v2/users/{email}/quarantine/messages/batchDelete",
+    "summary": "批量删除隔离区邮件",
+    "tags": [
+      "隔离区-邮件"
+    ],
+    "scopes": [
+      "Quarantine.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_QuarantineMailService_DeleteMessages",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "search_message_2",
+    "method": "GET",
+    "path": "/v2/users/{email}/quarantine/messages/search",
+    "summary": "搜索隔离区邮件",
+    "tags": [
+      "隔离区-邮件"
+    ],
+    "scopes": [
+      "Quarantine.Read.All",
+      "Quarantine.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_QuarantineMailService_SearchMessage",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "from",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "recipient",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "subject",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "startTime",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "endTime",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "cursor",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "size",
+        "in": "query",
+        "required": true
+      },
+      {
+        "name": "isProcessed",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "get_message_2",
+    "method": "GET",
+    "path": "/v2/users/{email}/quarantine/messages/{id}",
+    "summary": "获取隔离区邮件详情",
+    "tags": [
+      "隔离区-邮件"
+    ],
+    "scopes": [
+      "Quarantine.Read.All",
+      "Quarantine.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_QuarantineMailService_GetMessage",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "list_attachments_2",
+    "method": "GET",
+    "path": "/v2/users/{email}/quarantine/messages/{id}/attachments",
+    "summary": "查询隔离区邮件附件列表",
+    "tags": [
+      "隔离区-邮件"
+    ],
+    "scopes": [
+      "Quarantine.Read.All",
+      "Quarantine.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_QuarantineMailService_ListAttachments",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "create_attachment_download_session_2",
+    "method": "GET",
+    "path": "/v2/users/{email}/quarantine/messages/{id}/attachments/{attachmentId}/$value",
+    "summary": "获取隔离区邮件附件下载地址",
+    "tags": [
+      "隔离区-邮件"
+    ],
+    "scopes": [
+      "Quarantine.Read.All",
+      "Quarantine.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_QuarantineMailService_CreateAttachmentDownloadSession",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "attachmentId",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "release_message",
+    "method": "POST",
+    "path": "/v2/users/{email}/quarantine/messages/{id}/release",
+    "summary": "释放隔离区邮件",
+    "tags": [
+      "隔离区-邮件"
+    ],
+    "scopes": [
+      "Quarantine.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_alimail_mailagent_open_QuarantineMailService_ReleaseMessage",
+    "params": [
+      {
+        "name": "email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "id",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "delete_user",
+    "method": "DELETE",
+    "path": "/v2/users/{id_or_email}",
+    "summary": "删除用户",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_DeleteUser",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_user",
+    "method": "GET",
+    "path": "/v2/users/{id_or_email}",
+    "summary": "获取用户信息",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Read.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_GetUser",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "update_user",
+    "method": "PATCH",
+    "path": "/v2/users/{id_or_email}",
+    "summary": "更新用户信息",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_UpdateUser",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "bind_security_phone",
+    "method": "POST",
+    "path": "/v2/users/{id_or_email}/bindSecurityPhone",
+    "summary": "绑定用户安全手机号",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_BindSecurityPhone",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "change_password",
+    "method": "POST",
+    "path": "/v2/users/{id_or_email}/changePassword",
+    "summary": "修改用户密码",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_ChangePassword",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "bind_email_alias",
+    "method": "POST",
+    "path": "/v2/users/{id_or_email}/emailAliases",
+    "summary": "添加用户邮箱别名",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_BindEmailAlias",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "unbind_email_alias",
+    "method": "DELETE",
+    "path": "/v2/users/{id_or_email}/emailAliases/{alias}",
+    "summary": "删除用户邮箱别名",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_UnbindEmailAlias",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "alias",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "invalidate_all_tokens",
+    "method": "POST",
+    "path": "/v2/users/{id_or_email}/invalidateAllTokens",
+    "summary": "撤销用户全部登录令牌",
+    "tags": [
+      "登录&登出"
+    ],
+    "scopes": [
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "com_alibaba_alimail_sso_login_UserSecurityService_invalidateAllTokens",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "get_mailbox_settings",
+    "method": "GET",
+    "path": "/v2/users/{id_or_email}/mailboxSettings",
+    "summary": "获取邮箱设置",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [],
+    "operation_id": "alimailpb_ud_UserService_GetMailboxSettings",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "$select",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "update_mailbox_settings",
+    "method": "PATCH",
+    "path": "/v2/users/{id_or_email}/mailboxSettings",
+    "summary": "更新邮箱设置",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [],
+    "operation_id": "alimailpb_ud_UserService_UpdateMailboxSettings",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "reset_password",
+    "method": "POST",
+    "path": "/v2/users/{id_or_email}/resetPassword",
+    "summary": "重置用户密码",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_ResetPassword",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_shared_members",
+    "method": "GET",
+    "path": "/v2/users/{id_or_email}/sharedMembers",
+    "summary": "查询共享账号成员",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Read.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_ListSharedMembers",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "offset",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "add_shared_members",
+    "method": "POST",
+    "path": "/v2/users/{id_or_email}/sharedMembers/batchAdd",
+    "summary": "批量添加共享账号成员",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_AddSharedMembers",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "delete_shared_members",
+    "method": "POST",
+    "path": "/v2/users/{id_or_email}/sharedMembers/batchDelete",
+    "summary": "批量删除共享账号成员",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_DeleteSharedMembers",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "update_shared_members",
+    "method": "POST",
+    "path": "/v2/users/{id_or_email}/sharedMembers/batchUpdate",
+    "summary": "批量更新共享账号成员",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_UpdateSharedMembers",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "list_shared_with_me",
+    "method": "GET",
+    "path": "/v2/users/{id_or_email}/sharedWithMe",
+    "summary": "获取当前帐号可访问的共享账号列表",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Read.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_ListSharedWithMe",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name": "offset",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false
+      },
+      {
+        "name": "relations",
+        "in": "query",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "unbind_security_phone",
+    "method": "POST",
+    "path": "/v2/users/{id_or_email}/unbindSecurityPhone",
+    "summary": "解绑用户安全手机号",
+    "tags": [
+      "用户"
+    ],
+    "scopes": [
+      "User.Write.All",
+      "User.ReadWrite.All"
+    ],
+    "operation_id": "alimailpb_ud_UserService_UnbindSecurityPhone",
+    "params": [
+      {
+        "name": "id_or_email",
+        "in": "path",
+        "required": true
+      }
+    ]
+  }
+]

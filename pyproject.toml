@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "alimail"
+version = "0.1.0"
+description = "非官方 · 阿里邮箱（Alibaba Mail）OpenAPI Python SDK & CLI｜零依赖 · 112 接口 · 内置权限自检"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "mcocdaa" }]
+keywords = ["alimail", "alibaba-mail", "aliyun", "openapi", "email", "sdk", "cli"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications :: Email",
+    "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6", "build>=1.2"]
+
+[project.scripts]
+alimail = "alimail.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/mcocdaa/python-alimail"
+Repository = "https://github.com/mcocdaa/python-alimail"
+Issues = "https://github.com/mcocdaa/python-alimail/issues"
+Documentation = "https://github.com/mcocdaa/python-alimail#readme"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/alimail"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/alimail", "tests", "README.md", "LICENSE", "CHANGELOG.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = [".cache"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "C4"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

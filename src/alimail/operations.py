@@ -7,6 +7,7 @@ module.  It powers :meth:`alimail.client.Client.call` and ``alimail ops``.
 
 from __future__ import annotations
 
+import difflib
 import json
 import re
 import urllib.parse
@@ -90,10 +91,12 @@ def get_operation(name: str) -> Operation:
     for operation in registry.values():
         if operation.name.lower() == lowered or operation.operation_id.lower() == lowered:
             return operation
-    for operation in registry.values():
-        if lowered in operation.name.lower():
-            return operation
-    raise KeyError(f"unknown operation {name!r}; run `alimail ops list` to see all names")
+    all_names = sorted(registry)
+    suggestions = difflib.get_close_matches(name, all_names, n=3, cutoff=0.5)
+    if not suggestions and lowered != name:
+        suggestions = difflib.get_close_matches(lowered, all_names, n=3, cutoff=0.5)
+    hint = f" (did you mean: {', '.join(suggestions)}?)" if suggestions else ""
+    raise KeyError(f"Unknown operation {name!r}{hint}; run `alimail ops list` to see all names")
 
 
 def iter_operations(tag: str | None = None) -> Iterator[Operation]:

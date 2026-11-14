@@ -58,17 +58,39 @@ class FileTokenCache:
         value = self._load().get(key)
         return value if isinstance(value, dict) else None
 
+    def _write_atomic(self, data: dict[str, Any]) -> None:
+        self.path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+        if os.name == "posix":
+            with contextlib.suppress(OSError):
+                os.chmod(self.path.parent, 0o700)
+        tmp = self.path.with_suffix(".tmp")
+        payload = json.dumps(data, ensure_ascii=False, indent=2)
+        fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        try:
+            fh = os.fdopen(fd, "w", encoding="utf-8")
+        except BaseException:
+            os.close(fd)
+            with contextlib.suppress(OSError):
+                tmp.unlink()
+            raise
+        try:
+            with fh:
+                fh.write(payload)
+            if os.name == "posix":
+                with contextlib.suppress(OSError):
+                    os.chmod(tmp, 0o600)
+            tmp.replace(self.path)
+        except BaseException:
+            with contextlib.suppress(OSError):
+                tmp.unlink()
+            raise
+
     def set(self, key: str, value: dict[str, Any]) -> None:
         with self._lock:
             data = self._load()
             data[key] = value
-            try:
-                self.path.parent.mkdir(parents=True, exist_ok=True)
-                tmp = self.path.with_suffix(".tmp")
-                tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-                os.replace(tmp, self.path)
-            except OSError:
-                pass
+            with contextlib.suppress(OSError):
+                self._write_atomic(data)
 
     def delete(self, key: str) -> None:
         with self._lock:
@@ -76,9 +98,7 @@ class FileTokenCache:
             if key in data:
                 data.pop(key)
                 with contextlib.suppress(OSError):
-                    self.path.write_text(
-                        json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
-                    )
+                    self._write_atomic(data)
 
     def clear(self) -> None:
         with contextlib.suppress(OSError):
@@ -102,6 +122,7 @@ class TokenManager:
         clock: Callable[[], float] = time.time,
         skew: float = 120.0,
         timeout: float = 30.0,
+        verify_ssl: bool = True,
     ) -> None:
         self.credentials = credentials
         self.cache = cache if cache is not None else FileTokenCache()
@@ -109,6 +130,7 @@ class TokenManager:
         self.clock = clock
         self.skew = skew
         self.timeout = timeout
+        self.verify_ssl = verify_ssl
         self.base = credentials.base
         self._token: str | None = credentials.token if credentials.mode == "mcp" else None
         self._expires_at = float("inf") if self._token else 0.0
@@ -173,6 +195,7 @@ class TokenManager:
                         "client_secret": self.credentials.app_secret,
                     },
                     timeout=self.timeout,
+                    verify_ssl=self.verify_ssl,
                 )
             except TransportError as exc:
                 last_error = f"{base}: {exc}"

@@ -91,7 +91,7 @@ def main() -> int:
     client = make_client()
 
     try:
-        # inbox() 内部会先找到收件箱的数字 ID（不同租户编号/显示名可能不同），再取邮件列表
+        # inbox() 直接使用收件箱固定数字 ID（INBOX_FOLDER_ID = "2"）；若需按显示名解析可用 find_folder_id()
         result = client.mail.inbox(args.email, size=max(1, args.size))
         messages = extract_messages(result)
 

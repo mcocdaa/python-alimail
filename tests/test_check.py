@@ -13,7 +13,7 @@ from alimail.check import (
     format_report,
     run,
 )
-from alimail.errors import TransportError
+from alimail.errors import AlimailError, TransportError
 from tests.fakes import json_response, make_client, url_path, url_query
 
 EMAIL = "user@example.test"
@@ -203,6 +203,25 @@ class CheckRunFailureTests(unittest.TestCase):
         self.assertIn("connection refused", organization.message)
         self.assertEqual(report.passed, TOTAL_PROBES - 1)
         self.assertEqual(transport.call_count, TOTAL_PROBES)
+
+    def test_user_list_transport_error_does_not_crash_and_records_error(self):
+        overrides = {2: TransportError("read timed out")}
+        client, transport = make_client(_successful_sequence(overrides=overrides), max_retries=0)
+        report = run(client)
+        users = next(result for result in report.results if result.name == "用户列表")
+        self.assertEqual(users.status, ERROR)
+        self.assertIn("read timed out", users.message)
+        self.assertEqual(report.results[-1].name, "用户维度测试")
+        self.assertEqual(transport.call_count, 7)
+
+    def test_user_list_alimail_error_is_reported_as_error(self):
+        overrides = {2: AlimailError("token failure")}
+        client, _ = make_client(_successful_sequence(overrides=overrides), max_retries=0)
+        report = run(client, EMAIL)
+        users = next(result for result in report.results if result.name == "用户列表")
+        self.assertEqual(users.status, ERROR)
+        self.assertIn("token failure", users.message)
+        self.assertEqual(report.passed, TOTAL_PROBES - 1)
 
     def test_missing_scopes_are_deduplicated(self):
         overrides = {

@@ -54,7 +54,7 @@
 | 海外 / 新加坡 | `https://alimail-sg.aliyuncs.com` |
 
 - 选哪个由**租户开通地域**决定，不是由你人在哪里决定。
-- 默认使用国内 Host；SDK 在取 token 失败时会自动再试新加坡 Host，并在 stderr 提示已切换。
+- 默认使用国内 Host；未显式指定 Host 时，SDK 在取 token 失败后会自动静默回退尝试新加坡 Host（实际生效的 Host 可通过 `client.base` 或 `alimail token` 查看）。
 - 也可以显式指定：环境变量 `ALIMAIL_BASE`、CLI 参数 `--base`，或 `Client(base="...")`。
 - `base` 只写到主机名，不要带 `/v2` 之类的路径。
 

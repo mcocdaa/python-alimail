@@ -89,13 +89,22 @@ class GetOperationTests(unittest.TestCase):
     def test_lookup_by_name_is_case_insensitive(self):
         self.assertEqual(get_operation("LIST_USERS").name, "list_users")
 
-    def test_lookup_falls_back_to_a_unique_substring(self):
-        self.assertEqual(get_operation("send").name, "send_message")
+    def test_substring_does_not_match_arbitrary_operation(self):
+        for needle in ("delete", "send"):
+            with self.subTest(needle=needle), self.assertRaises(KeyError):
+                get_operation(needle)
+
+    def test_unknown_operation_suggests_close_matches(self):
+        with self.assertRaises(KeyError) as ctx:
+            get_operation("list_user")
+        message = str(ctx.exception)
+        self.assertIn("Unknown operation", message)
+        self.assertIn("list_users", message)
 
     def test_unknown_operation_raises_key_error(self):
         with self.assertRaises(KeyError) as ctx:
             get_operation("definitely_not_an_operation")
-        self.assertIn("unknown operation", str(ctx.exception))
+        self.assertIn("Unknown operation", str(ctx.exception))
         self.assertIn("ops list", str(ctx.exception))
 
     def test_iter_operations_without_tag_returns_everything(self):

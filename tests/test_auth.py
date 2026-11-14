@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import os
+import stat
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -100,6 +102,18 @@ class TokenManagerFetchTests(TokenManagerTestCase):
 
     def test_base_property_starts_at_the_configured_host(self):
         self.assertEqual(self.manager.base, CUSTOM_BASE)
+
+    def test_verify_ssl_false_is_forwarded_to_token_transport(self):
+        self.transport.push(token_response())
+        manager = TokenManager(
+            APP_CREDS,
+            cache=self.cache,
+            transport=self.transport,
+            clock=self.clock,
+            verify_ssl=False,
+        )
+        self.assertEqual(manager.get(), "tok-1")
+        self.assertFalse(self.transport.calls[0].verify_ssl)
 
 
 class TokenManagerCachingTests(TokenManagerTestCase):
@@ -345,11 +359,42 @@ class FileTokenCacheTests(unittest.TestCase):
         cache.set("one", {"a": 1})
         self.assertFalse(self.path.with_suffix(".tmp").exists())
 
+    @unittest.skipUnless(os.name == "posix", "POSIX file mode bits only")
+    def test_set_enforces_0700_dir_and_0600_file_permissions(self):
+        self.path.parent.mkdir(parents=True, mode=0o755)
+        os.chmod(self.path.parent, 0o755)
+        self.path.write_text("{}", encoding="utf-8")
+        os.chmod(self.path, 0o644)
+
+        cache = FileTokenCache(self.path)
+        cache.set("one", {"access_token": "secret"})
+
+        self.assertEqual(stat.S_IMODE(self.path.parent.stat().st_mode), 0o700)
+        self.assertEqual(stat.S_IMODE(self.path.stat().st_mode), 0o600)
+
+    @unittest.skipUnless(os.name == "posix", "POSIX file mode bits only")
+    def test_delete_is_atomic_and_enforces_0600_permissions(self):
+        cache = FileTokenCache(self.path)
+        cache.set("one", {"a": 1})
+        cache.set("two", {"b": 2})
+        os.chmod(self.path, 0o644)
+
+        with patch.object(Path, "replace", autospec=True, wraps=Path.replace) as replace_spy:
+            cache.delete("one")
+
+        self.assertEqual(replace_spy.call_count, 1)
+        self.assertFalse(self.path.with_suffix(".tmp").exists())
+        self.assertEqual(stat.S_IMODE(self.path.stat().st_mode), 0o600)
+        self.assertIsNone(cache.get("one"))
+        self.assertEqual(cache.get("two"), {"b": 2})
+
     def test_io_errors_never_raise(self):
         cache = FileTokenCache(self.path)
-        with patch.object(Path, "write_text", side_effect=OSError("disk full")):
+        cache.set("existing", {"a": 1})
+        with patch("alimail.auth.os.open", side_effect=OSError("disk full")):
             cache.set("one", {"a": 1})
-            cache.delete("one")
+            cache.delete("existing")
+        with patch.object(Path, "unlink", side_effect=OSError("busy")):
             cache.clear()
         with patch.object(Path, "read_text", side_effect=OSError("permission denied")):
             self.assertIsNone(cache.get("one"))

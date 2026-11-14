@@ -1,5 +1,7 @@
 # python-alimail
 
+[English](README_EN.md) | 简体中文
+
 [![CI](https://github.com/mcocdaa/python-alimail/actions/workflows/ci.yml/badge.svg)](https://github.com/mcocdaa/python-alimail/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/alimail.svg)](https://pypi.org/project/alimail/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -26,7 +28,7 @@
 - [常见坑](#常见坑)
 - [与官方文档的关系](#与官方文档的关系)
 - [开发与测试](#开发与测试)
-- [English](#english)
+- [English](README_EN.md)
 - [License](#license)
 
 ## 特性

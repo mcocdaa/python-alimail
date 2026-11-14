@@ -22,11 +22,11 @@ EXIT_DENIED = 3
 # ----------------------------------------------------------------------
 # helpers
 # ----------------------------------------------------------------------
-def _dump(data: Any, as_json: bool = False) -> None:
-    if as_json or not isinstance(data, (dict, list)):
+def _dump(data: Any, pretty: bool = True) -> None:
+    if pretty:
         print(json.dumps(data, ensure_ascii=False, indent=2))
         return
-    print(json.dumps(data, ensure_ascii=False, indent=2))
+    print(json.dumps(data, ensure_ascii=False, separators=(",", ":")))
 
 
 def _print_users(data: Any) -> None:
@@ -115,7 +115,7 @@ def cmd_token(args: argparse.Namespace) -> int:
 
 
 def cmd_org(args: argparse.Namespace) -> int:
-    _dump(_client(args).organization.get(), args.json)
+    _dump(_client(args).organization.get(), pretty=not args.json)
     return EXIT_OK
 
 
@@ -124,7 +124,7 @@ def cmd_users(args: argparse.Namespace) -> int:
     if not args.json:
         _print_users(data)
     else:
-        _dump(data)
+        _dump(data, pretty=False)
     return EXIT_OK
 
 
@@ -134,7 +134,7 @@ def cmd_folders(args: argparse.Namespace) -> int:
     if not args.json:
         _print_folders(data)
     else:
-        _dump(data)
+        _dump(data, pretty=False)
     return EXIT_OK
 
 
@@ -144,13 +144,13 @@ def cmd_inbox(args: argparse.Namespace) -> int:
     if not args.json:
         _print_messages(data)
     else:
-        _dump(data)
+        _dump(data, pretty=False)
     return EXIT_OK
 
 
 def cmd_read(args: argparse.Namespace) -> int:
     client = _client(args)
-    _dump(client.mail.message(_email(args, client), args.message_id), args.json)
+    _dump(client.mail.message(_email(args, client), args.message_id), pretty=not args.json)
     return EXIT_OK
 
 
@@ -160,7 +160,7 @@ def cmd_search(args: argparse.Namespace) -> int:
     if not args.json:
         _print_messages(data)
     else:
-        _dump(data)
+        _dump(data, pretty=False)
     return EXIT_OK
 
 
@@ -185,14 +185,38 @@ def cmd_send(args: argparse.Namespace) -> int:
         text=args.text,
         html=args.html,
     )
-    _dump(result, args.json)
+    _dump(result, pretty=not args.json)
     return EXIT_OK
 
 
 def cmd_check(args: argparse.Namespace) -> int:
     client = _client(args)
     report = run_check(client, args.email)
-    print(format_report(report))
+    if args.json:
+        payload = {
+            "email": report.email,
+            "passed": report.passed,
+            "total": report.total,
+            "all_passed": report.all_passed,
+            "missing_scopes": report.missing_scopes(),
+            "results": [
+                {
+                    "name": result.name,
+                    "scope": result.scope,
+                    "method": result.method,
+                    "path": result.path,
+                    "status": result.status,
+                    "passed": result.passed,
+                    "http_status": result.http_status,
+                    "detail_error_code": result.detail_error_code,
+                    "message": result.message,
+                }
+                for result in report.results
+            ],
+        }
+        _dump(payload, pretty=False)
+    else:
+        print(format_report(report))
     if report.all_passed:
         return EXIT_OK
     return EXIT_DENIED
@@ -204,7 +228,7 @@ def cmd_call(args: argparse.Namespace) -> int:
     query = _parse_pairs(args.query)
     body = json.loads(args.json_body) if args.json_body else None
     result = client.call(args.operation, path=path_params, query=query, json=body)
-    _dump(result, args.json)
+    _dump(result, pretty=not args.json)
     return EXIT_OK
 
 
@@ -254,7 +278,7 @@ def cmd_raw(args: argparse.Namespace) -> int:
     body = json.loads(args.json_body) if args.json_body else None
     response = client.raw(args.method, args.path, params=query or None, json=body)
     print(f"HTTP {response.status}")
-    _dump(response.data, True)
+    _dump(response.data, pretty=not args.json)
     return EXIT_OK if response.ok else EXIT_ERROR
 
 

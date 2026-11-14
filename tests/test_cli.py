@@ -14,6 +14,7 @@ from alimail.cli import (
     EXIT_ERROR,
     EXIT_OK,
     EXIT_USAGE,
+    _dump,
     build_parser,
     main,
 )
@@ -64,6 +65,17 @@ class CliGlobalTests(unittest.TestCase):
     def test_parser_builds(self):
         parser = build_parser()
         self.assertEqual(parser.prog, "alimail")
+
+    def test_dump_compact_and_pretty_json(self):
+        compact_buf = io.StringIO()
+        with redirect_stdout(compact_buf):
+            _dump({"b": 2, "a": 1}, pretty=False)
+        self.assertEqual(compact_buf.getvalue(), '{"b":2,"a":1}\n')
+
+        pretty_buf = io.StringIO()
+        with redirect_stdout(pretty_buf):
+            _dump({"b": 2, "a": 1}, pretty=True)
+        self.assertEqual(pretty_buf.getvalue(), '{\n  "b": 2,\n  "a": 1\n}\n')
 
 
 class CliOpsTests(unittest.TestCase):
@@ -522,6 +534,35 @@ class CliCheckTests(unittest.TestCase):
         ):
             run_cli(["check", "--email", "other@example.test"])
         run_check.assert_called_once_with(client, "other@example.test")
+
+    def test_check_json_output_passed(self):
+        client, _ = make_client([], email=EMAIL)
+        report = self._report(passed=True)
+        with patched_client(client), patch("alimail.cli.run_check", return_value=report):
+            code, out, _ = run_cli(["--json", "check"])
+        self.assertEqual(code, EXIT_OK)
+        payload = json.loads(out)
+        self.assertEqual(payload["email"], EMAIL)
+        self.assertEqual(payload["passed"], 2)
+        self.assertEqual(payload["total"], 2)
+        self.assertTrue(payload["all_passed"])
+        self.assertEqual(payload["missing_scopes"], [])
+        self.assertEqual(len(payload["results"]), 2)
+        self.assertEqual(payload["results"][0]["scope"], "Organization.Read.All")
+        self.assertTrue(payload["results"][0]["passed"])
+
+    def test_check_json_output_denied(self):
+        client, _ = make_client([], email=EMAIL)
+        report = self._report(passed=False)
+        with patched_client(client), patch("alimail.cli.run_check", return_value=report):
+            code, out, _ = run_cli(["--json", "check"])
+        self.assertEqual(code, EXIT_DENIED)
+        payload = json.loads(out)
+        self.assertFalse(payload["all_passed"])
+        self.assertEqual(payload["missing_scopes"], ["Domain.Read.All"])
+        self.assertEqual(payload["results"][1]["status"], DENIED)
+        self.assertEqual(payload["results"][1]["http_status"], 403)
+        self.assertEqual(payload["results"][1]["detail_error_code"], "accessDenied")
 
 
 class CliErrorHandlingTests(unittest.TestCase):

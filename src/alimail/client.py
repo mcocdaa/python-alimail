@@ -73,6 +73,7 @@ class Client:
             cache=cache if cache is not None else FileTokenCache(),
             transport=self._transport,
             timeout=timeout,
+            verify_ssl=self.verify_ssl,
         )
         self._init_resources()
 

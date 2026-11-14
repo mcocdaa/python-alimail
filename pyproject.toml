@@ -41,7 +41,7 @@ Documentation = "https://github.com/mcocdaa/python-alimail#readme"
 packages = ["src/alimail"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src/alimail", "tests", "README.md", "LICENSE", "CHANGELOG.md"]
+include = ["src/alimail", "tests", "README.md", "README_EN.md", "LICENSE", "CHANGELOG.md"]
 
 [tool.ruff]
 line-length = 100

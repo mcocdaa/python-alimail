@@ -214,6 +214,24 @@ class ClientRequestTests(unittest.TestCase):
         client.raw("GET", "/v2/users")
         self.assertFalse(transport.calls[0].verify_ssl)
 
+    def test_verify_ssl_is_forwarded_to_token_fetch(self):
+        transport = FakeTransport(
+            [
+                json_response(200, {"access_token": "tok", "expires_in": 3600}),
+                json_response(200, {"ok": True}),
+            ]
+        )
+        client = Client(
+            credentials=Credentials(base=APP_BASE, app_id="a", app_secret="s"),
+            transport=transport,
+            cache=NullCache(),
+            verify_ssl=False,
+        )
+        client.raw("GET", "/v2/users")
+        self.assertEqual(len(transport.calls), 2)
+        self.assertFalse(transport.calls[0].verify_ssl)
+        self.assertFalse(transport.calls[1].verify_ssl)
+
     def test_raw_does_not_raise_on_error_status(self):
         client, _ = make_client([json_response(403, {"message": "denied", "detailErrorCode": "x"})])
         response = client.raw("GET", "/v2/users")

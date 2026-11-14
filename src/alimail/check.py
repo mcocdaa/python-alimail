@@ -67,10 +67,11 @@ class CheckReport:
         return seen
 
 
-def _probe(report: CheckReport, name: str, scope: str, method: str, path: str, fn: Any) -> None:
+def _probe(report: CheckReport, name: str, scope: str, method: str, path: str, fn: Any) -> Any:
     result = CheckResult(name=name, scope=scope, method=method, path=path)
+    value: Any = None
     try:
-        fn()
+        value = fn()
     except APIError as exc:
         result.http_status = exc.status
         result.detail_error_code = exc.detail_error_code
@@ -83,6 +84,7 @@ def _probe(report: CheckReport, name: str, scope: str, method: str, path: str, f
         result.status = ERROR
         result.message = str(exc)
     report.results.append(result)
+    return value
 
 
 def run(client: Client, email: str | None = None) -> CheckReport:
@@ -97,23 +99,14 @@ def run(client: Client, email: str | None = None) -> CheckReport:
         client.organization.get,
     )
     _probe(report, "域名列表", "Domain.Read.All", "GET", "/v2/domains", client.domains.list)
-    users = None
-    try:
-        users = client.users.list(size=5)
-        report.results.append(CheckResult("用户列表", "User.Read.All", "GET", "/v2/users"))
-    except APIError as exc:
-        report.results.append(
-            CheckResult(
-                "用户列表",
-                "User.Read.All",
-                "GET",
-                "/v2/users",
-                DENIED if exc.status == 403 else ERROR,
-                exc.status,
-                exc.detail_error_code,
-                exc.message or "",
-            )
-        )
+    users = _probe(
+        report,
+        "用户列表",
+        "User.Read.All",
+        "GET",
+        "/v2/users",
+        lambda: client.users.list(size=5),
+    )
 
     if email is None and isinstance(users, dict):
         for user in users.get("users", []):

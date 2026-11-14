@@ -379,7 +379,10 @@ class FileTokenCacheTests(unittest.TestCase):
         cache.set("two", {"b": 2})
         os.chmod(self.path, 0o644)
 
-        with patch.object(Path, "replace", autospec=True, wraps=Path.replace) as replace_spy:
+        original_replace = Path.replace
+        with patch.object(
+            Path, "replace", autospec=True, side_effect=original_replace
+        ) as replace_spy:
             cache.delete("one")
 
         self.assertEqual(replace_spy.call_count, 1)

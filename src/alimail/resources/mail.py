@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Iterator, Sequence
 from typing import Any
 
 from . import q, recipients
@@ -14,6 +14,42 @@ DRAFT_FOLDER_ID = "5"
 DELETED_FOLDER_ID = "6"
 
 DEFAULT_MESSAGE_SELECT = "subject,from,receivedDateTime,isRead,id"
+DEFAULT_MESSAGE_DETAIL_SELECT = (
+    "id,mailId,internetMessageId,conversationId,folderId,subject,summary,"
+    "from,sender,replyTo,toRecipients,ccRecipients,bccRecipients,"
+    "receivedDateTime,sentDateTime,isRead,hasAttachments,body"
+)
+
+
+def unwrap_message(payload: Any) -> dict[str, Any]:
+    """Extract the inner message dict from Alimail's ``{"message": {...}}`` envelope."""
+    if isinstance(payload, dict):
+        inner = payload.get("message")
+        if isinstance(inner, dict):
+            return inner
+        return payload
+    return {}
+
+
+def _messages_params(
+    *,
+    size: int | None = None,
+    cursor: str | None = None,
+    select: str | None = DEFAULT_MESSAGE_SELECT,
+    orderby: str | None = None,
+    is_ascending: bool | None = None,
+    start_time: str | None = None,
+    end_time: str | None = None,
+) -> dict[str, Any]:
+    return {
+        "size": size,
+        "cursor": cursor,
+        "$select": select,
+        "orderby": orderby,
+        "isAscending": None if is_ascending is None else ("true" if is_ascending else "false"),
+        "startTime": start_time,
+        "endTime": end_time,
+    }
 
 
 class MailResource:
@@ -66,22 +102,85 @@ class MailResource:
         cursor: str | None = None,
         select: str | None = DEFAULT_MESSAGE_SELECT,
         orderby: str | None = None,
+        is_ascending: bool | None = None,
+        start_time: str | None = None,
+        end_time: str | None = None,
     ) -> dict[str, Any]:
         return self._client.request(
             "GET",
             f"/v2/users/{q(email)}/mailFolders/{q(folder_id)}/messages",
-            params={"size": size, "cursor": cursor, "$select": select, "orderby": orderby},
+            params=_messages_params(
+                size=size,
+                cursor=cursor,
+                select=select,
+                orderby=orderby,
+                is_ascending=is_ascending,
+                start_time=start_time,
+                end_time=end_time,
+            ),
         )
 
     def inbox(
-        self, email: str, *, size: int | None = 20, select: str | None = DEFAULT_MESSAGE_SELECT
+        self,
+        email: str,
+        *,
+        size: int | None = 20,
+        select: str | None = DEFAULT_MESSAGE_SELECT,
+        is_ascending: bool | None = None,
+        start_time: str | None = None,
+        end_time: str | None = None,
     ) -> dict[str, Any]:
-        return self.messages(email, folder_id=INBOX_FOLDER_ID, size=size, select=select)
+        return self.messages(
+            email,
+            folder_id=INBOX_FOLDER_ID,
+            size=size,
+            select=select,
+            is_ascending=is_ascending,
+            start_time=start_time,
+            end_time=end_time,
+        )
+
+    def iter_messages(
+        self,
+        email: str,
+        *,
+        folder_id: str = INBOX_FOLDER_ID,
+        size: int = 50,
+        select: str | None = DEFAULT_MESSAGE_SELECT,
+        is_ascending: bool | None = None,
+        start_time: str | None = None,
+        end_time: str | None = None,
+        max_pages: int | None = None,
+    ) -> Iterator[dict[str, Any]]:
+        """Yield messages across pages using ``nextCursor``."""
+        return self._client.paginate(
+            "GET",
+            f"/v2/users/{q(email)}/mailFolders/{q(folder_id)}/messages",
+            item_key="messages",
+            params=_messages_params(
+                size=size,
+                select=select,
+                is_ascending=is_ascending,
+                start_time=start_time,
+                end_time=end_time,
+            ),
+            max_pages=max_pages,
+        )
 
     def message(self, email: str, message_id: str, *, select: str | None = None) -> dict[str, Any]:
         return self._client.request(
             "GET", f"/v2/users/{q(email)}/messages/{q(message_id)}", params={"$select": select}
         )
+
+    def read(
+        self,
+        email: str,
+        message_id: str,
+        *,
+        select: str | None = DEFAULT_MESSAGE_DETAIL_SELECT,
+    ) -> dict[str, Any]:
+        """Fetch one full message (including ``body`` by default) and unwrap ``{"message": ...}``."""
+        return unwrap_message(self.message(email, message_id, select=select))
 
     def search(
         self,

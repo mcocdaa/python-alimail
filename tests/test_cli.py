@@ -264,15 +264,38 @@ class CliMailCommandTests(unittest.TestCase):
         self.assertEqual(url_query(call.url)["size"], ["5"])
 
     def test_read_prints_message_json(self):
-        client, transport = make_client([json_response(200, {"id": "m1", "subject": "Hello"})])
+        client, transport = make_client(
+            [
+                json_response(
+                    200,
+                    {
+                        "message": {
+                            "id": "m1",
+                            "subject": "Hello",
+                            "body": {"bodyText": "Hi there"},
+                        }
+                    },
+                )
+            ]
+        )
         with patched_client(client):
             code, out, _ = run_cli(["read", "m1", "--email", EMAIL])
         self.assertEqual(code, EXIT_OK)
-        self.assertIn('"subject": "Hello"', out)
+        parsed = json.loads(out)
+        self.assertEqual(parsed["subject"], "Hello")
+        self.assertEqual(parsed["body"]["bodyText"], "Hi there")
         self.assertEqual(
             url_path(transport.calls[0].url),
             f"/v2/users/{ENCODED_EMAIL}/messages/m1",
         )
+        self.assertIn("body", url_query(transport.calls[0].url)["$select"][0].split(","))
+
+    def test_read_custom_select(self):
+        client, transport = make_client([json_response(200, {"message": {"id": "m1"}})])
+        with patched_client(client):
+            code, _, _ = run_cli(["read", "m1", "--email", EMAIL, "--select", "id,subject"])
+        self.assertEqual(code, EXIT_OK)
+        self.assertEqual(url_query(transport.calls[0].url), {"$select": ["id,subject"]})
 
     def test_search_sends_the_query_body(self):
         client, transport = make_client([json_response(200, {"messages": []})])

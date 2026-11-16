@@ -141,8 +141,8 @@ client = Client.from_mcp_token("mcp-token", email="me@example.com")  # 个人 MC
 | 用户详情 | `client.users.get("user@example.com")` |
 | 邮件文件夹 | `client.mail.folders("user@example.com")` |
 | 文件夹内邮件 | `client.mail.messages("user@example.com", folder_id="2", size=20)` |
-| 收件箱 | `client.mail.inbox("user@example.com", size=20)` |
-| 邮件详情 | `client.mail.message("user@example.com", message_id)` |
+| 收件箱 / 自动翻页 | `client.mail.inbox("user@example.com", size=20)` / `client.mail.iter_messages("user@example.com")` |
+| 邮件详情（含正文） | `client.mail.read("user@example.com", message_id)`（自动附带 `body` 并解包） |
 | 搜索邮件 | `client.mail.search("user@example.com", query="subject:hello", size=20)` |
 | 创建草稿 | `client.mail.create_draft("user@example.com", to=["a@example.com"], subject="Hi", text="正文")` |
 | 发送邮件 | `client.mail.send("user@example.com", to=["a@example.com"], subject="Hi", text="正文")` |
@@ -262,6 +262,7 @@ alimail raw GET /v2/domains
 |---|---|---|
 | 用户列表返回 `users: []` 但 `total` 有值 | 分页参数是 `size`，不是 `limit` | [docs/pitfalls.md](docs/pitfalls.md#1-用户列表返回空数组但-total-有值) |
 | `folderId is invalid!` | `folderId` 必须是数字 ID（收件箱 = 2） | [docs/pitfalls.md](docs/pitfalls.md#2-folderid-必须是数字-id) |
+| 单封邮件详情没有 `body` 正文 | 详情接口需 `$select=...,body` 且外层包 `message`，改用 `mail.read()` | [docs/pitfalls.md](docs/pitfalls.md#11-单封邮件详情默认不含正文-body且外层包裹-message) |
 | `account not valid` | `/v2/users/$current` 不支持，要传真实邮箱 | [docs/pitfalls.md](docs/pitfalls.md#3-v2userscurrent-不支持) |
 | 补了权限仍 403 | 旧 token 不会自动带上新 scope | [docs/pitfalls.md](docs/pitfalls.md#4-权限变更后必须重新获取-token) |
 | 偶发 429 | 单域所有应用合计 40 次/秒 | [docs/pitfalls.md](docs/pitfalls.md#5-单域限流-40-次秒) |

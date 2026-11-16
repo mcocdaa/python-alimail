@@ -201,6 +201,58 @@ class MailFolderTests(ResourceTestCase):
         client.mail.message(EMAIL, "m-1", select="subject")
         self.assertEqual(url_query(transport.calls[0].url), {"$select": ["subject"]})
 
+    def test_read_requests_body_by_default_and_unwraps_message(self):
+        client, transport = self.new_client(
+            [
+                json_response(
+                    200, {"message": {"id": "m-1", "subject": "Hi", "body": {"bodyText": "hello"}}}
+                )
+            ]
+        )
+        detail = client.mail.read(EMAIL, "m-1")
+        self.assertEqual(detail["id"], "m-1")
+        self.assertEqual(detail["body"]["bodyText"], "hello")
+        query = url_query(transport.calls[0].url)
+        self.assertIn("$select", query)
+        self.assertIn("body", query["$select"][0].split(","))
+
+    def test_read_allows_custom_select_or_flat_payload(self):
+        client, transport = self.new_client([json_response(200, {"id": "m-2", "subject": "Flat"})])
+        detail = client.mail.read(EMAIL, "m-2", select="id,subject")
+        self.assertEqual(detail, {"id": "m-2", "subject": "Flat"})
+        self.assertEqual(url_query(transport.calls[0].url), {"$select": ["id,subject"]})
+
+    def test_inbox_forwards_time_and_order_filters(self):
+        client, transport = self.new_client([json_response(200, {"messages": []})])
+        client.mail.inbox(
+            EMAIL,
+            size=10,
+            is_ascending=False,
+            start_time="2026-11-01T00:00:00Z",
+            end_time="2026-11-16T00:00:00Z",
+        )
+        self.assertEqual(
+            url_query(transport.calls[0].url),
+            {
+                "size": ["10"],
+                "$select": ["subject,from,receivedDateTime,isRead,id"],
+                "isAscending": ["false"],
+                "startTime": ["2026-11-01T00:00:00Z"],
+                "endTime": ["2026-11-16T00:00:00Z"],
+            },
+        )
+
+    def test_iter_messages_follows_cursor(self):
+        client, transport = self.new_client(
+            [
+                json_response(200, {"messages": [{"id": "m1"}], "nextCursor": "c1"}),
+                json_response(200, {"messages": [{"id": "m2"}], "nextCursor": ""}),
+            ]
+        )
+        items = list(client.mail.iter_messages(EMAIL, size=50))
+        self.assertEqual([item["id"] for item in items], ["m1", "m2"])
+        self.assertEqual(url_query(transport.calls[1].url)["cursor"], ["c1"])
+
     def test_attachments_path(self):
         client, transport = self.new_client()
         client.mail.attachments(EMAIL, "m-1")

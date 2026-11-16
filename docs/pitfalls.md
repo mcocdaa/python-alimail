@@ -297,6 +297,34 @@ alimail send --from user@example.com --to a@example.com --subject "Hi" --text "�
 
 ---
 
+## 11. 单封邮件详情默认不含正文 `body`，且外层包裹 `message`
+
+**现象**
+
+直接调 `GET /v2/users/{email}/messages/{id}`（不带 `$select`），返回体是 `{"message": {"id": ..., "subject": ..., "summary": ...}}`——不仅外层多了一层 `"message"` 包裹，而且没有 `body`、`replyTo`、`toRecipients`、`ccRecipients`、`internetMessageId`。
+
+**原因**
+
+阿里邮箱的邮件详情接口默认只返回摘要字段，必须通过 `$select` 显式列出需要包含的字段（含 `body`）才会下发 `body.bodyText` / `body.bodyHtml`；同时返回 JSON 始终嵌套在 `"message"` 键下。
+
+**正确做法**
+
+用封装好的 `read()` 或 CLI `alimail read`（默认带完整 `$select` 含 `body`，并自动解包 `"message"`）：
+
+```python
+detail = client.mail.read("user@example.com", message_id)
+print(detail["subject"])
+print((detail.get("body") or {}).get("bodyText"))
+```
+
+```bash
+alimail read <message-id> --email user@example.com
+```
+
+如需原始响应或精简字段，仍可调用 `client.mail.message(email, message_id, select="id,subject,body")` 或传入 `--select`。
+
+---
+
 ## 相关
 
 - 权限与 scope 对照：[permissions.md](permissions.md)

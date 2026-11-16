@@ -12,6 +12,7 @@ from .check import format_report
 from .check import run as run_check
 from .client import Client
 from .errors import AlimailError, ConfigError
+from .resources.mail import DEFAULT_MESSAGE_DETAIL_SELECT
 
 EXIT_OK = 0
 EXIT_ERROR = 1
@@ -150,7 +151,10 @@ def cmd_inbox(args: argparse.Namespace) -> int:
 
 def cmd_read(args: argparse.Namespace) -> int:
     client = _client(args)
-    _dump(client.mail.message(_email(args, client), args.message_id), pretty=not args.json)
+    _dump(
+        client.mail.read(_email(args, client), args.message_id, select=args.select),
+        pretty=not args.json,
+    )
     return EXIT_OK
 
 
@@ -323,9 +327,14 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--size", type=int, default=10)
     p.set_defaults(func=cmd_inbox)
 
-    p = sub.add_parser("read", help="读取一封邮件")
+    p = sub.add_parser("read", help="读取一封邮件（默认含正文 body）")
     p.add_argument("message_id")
     p.add_argument("--email")
+    p.add_argument(
+        "--select",
+        default=DEFAULT_MESSAGE_DETAIL_SELECT,
+        help="字段列表 ($select)，默认包含正文 body",
+    )
     p.set_defaults(func=cmd_read)
 
     p = sub.add_parser("search", help="搜索邮件")

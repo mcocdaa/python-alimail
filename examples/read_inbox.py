@@ -104,11 +104,11 @@ def main() -> int:
             subject = message.get("subject") or "(无主题)"
             print(f"{flag} {sender_of(message):<32} {subject}")
 
-        # 再演示一次「按 ID 读单封详情」
+        # 再演示一次「按 ID 读单封详情」（read() 会默认附带 body 并解包 {"message": ...}）
         if messages and isinstance(messages[0], dict):
             message_id = messages[0].get("id")
             if message_id:
-                detail = client.mail.message(args.email, message_id)
+                detail = client.mail.read(args.email, message_id)
                 print("\n--- 第一封详情 ---")
                 if isinstance(detail, dict):
                     print("主题:", detail.get("subject") or "(无主题)")
@@ -116,7 +116,12 @@ def main() -> int:
                     print("ID:", detail.get("id") or message_id)
                     body = detail.get("body")
                     if isinstance(body, dict):
-                        text = body.get("bodyText") or body.get("content") or ""
+                        text = (
+                            body.get("bodyText")
+                            or body.get("bodyHtml")
+                            or body.get("content")
+                            or ""
+                        )
                         print("正文:", (text or "（无纯文本正文）")[:500])
                 else:
                     print(detail)

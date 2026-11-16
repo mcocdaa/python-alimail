@@ -152,8 +152,8 @@ alimail inbox --email user@example.com --size 5
 | Departments | `client.departments.children("$root")` |
 | Groups | `client.groups.list()` |
 | Shared contacts | `client.contacts.folders()` / `client.contacts.contacts(folder_id)` |
-| Mail folders & inbox | `client.mail.folders("user@example.com")` / `client.mail.inbox("user@example.com", size=20)` |
-| Read & search messages | `client.mail.message("user@example.com", message_id)` / `client.mail.search("user@example.com", query="subject:hello")` |
+| Mail folders & inbox | `client.mail.folders("user@example.com")` / `client.mail.inbox("user@example.com", size=20)` / `client.mail.iter_messages("user@example.com")` |
+| Read & search messages | `client.mail.read("user@example.com", message_id)` / `client.mail.search("user@example.com", query="subject:hello")` |
 | Drafts & send (2-step) | `client.mail.create_draft(...)` / `client.mail.send("user@example.com", to=["a@example.com"], subject="Hi", text="Body")` |
 | Batch delete / move / mark read | `client.mail.delete(...)` / `client.mail.move(...)` / `client.mail.mark_read(...)` |
 | Calendars & events | `client.calendars.list("user@example.com")` / `client.calendars.events("user@example.com", calendar_id)` |
@@ -270,8 +270,9 @@ src/alimail/
 3. **`/v2/users/$current` is not supported**: Pass an explicit email address (`$current` only works on `/v2/organization/$current`).
 4. **Refresh token after adding scopes**: Existing tokens do not inherit newly added scopes; run `alimail token --force` or `client.token(force=True)`.
 5. **Two-step send flow**: Sending mail creates a draft first and then calls `POST .../messages/{id}/send` (handled automatically by `client.mail.send()`).
+6. **Message detail omits `body` without `$select`**: `GET .../messages/{id}` wraps fields in `{"message": ...}` and omits `body` unless `$select` requests it; use `client.mail.read(...)` or `alimail read`.
 
-See [docs/pitfalls.md](docs/pitfalls.md) for all 10 field-verified notes.
+See [docs/pitfalls.md](docs/pitfalls.md) for all 11 field-verified notes.
 
 ---
 
